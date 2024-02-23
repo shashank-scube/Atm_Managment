@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class AtmManagement {
+    // not implemented any receipt printing method it will be developed in future
     static Map<String,String> accountHolderData=new HashMap<>()
 
     {{
@@ -30,7 +31,7 @@ public class AtmManagement {
         System.out.println("enter the expireYear in the card");
         int expireYear = input.nextInt();
         System.out.println("Choose the cardType");
-        String cardType ;
+        String cardType="" ;
         System.out.println("1.VISA 2.RuPay 3.Contactless 4.Other");
         int choice = input.nextInt();
         // choice for choose the ATM cardType
@@ -227,7 +228,7 @@ public class AtmManagement {
                     break;
                 case 5: atmManagement.fastCash(cardNumber,accountHolderDetails,transactionDetails);
                     break;
-                case 6:atmManagement.fundTransaction();
+                case 6:atmManagement.fundTransaction(accountHolderDetails,cardNumber,transactionDetails);
                     break;
                 case 7:return ;
                 case 8:main(null);
@@ -271,17 +272,13 @@ public class AtmManagement {
             }
         }
     }
-    // to verify the pin to conform withdrew and also for fast cash withdraw.
+    // to verify the pin method was to verify the pin to all the transaction like withdraw,fastCash and also fundTransform.
     private boolean withDrewAmountPinVerify(Map<String, Map<String, String>> accountHolderDetails, String cardNumber) {
         Scanner input=new Scanner(System.in);
+        //no implemented the option of current or savings account
         System.out.println("Enter the pin Number to conform you Transaction");
         int pinNumber=input.nextInt();
-        if(Integer.toString(pinNumber).length()==4 && Integer.toString(pinNumber).equals(getCardPassword(accountHolderDetails,cardNumber)))
-        {
-            return true;
-        }else{
-            return false;
-        }
+        return Integer.toString(pinNumber).length() == 4 && Integer.toString(pinNumber).equals(getCardPassword(accountHolderDetails, cardNumber));
     }
     // end of withdraw amount
 
@@ -381,17 +378,13 @@ public class AtmManagement {
         System.out.println("1.100 2.200 3.500 4.1000");
         int fastCashAmount=0;
         int choice=input.nextInt();
-        switch (choice)
-        {
-            case 1:fastCashAmount=100;
-            break;
-            case 2:fastCashAmount=200;
-            break;
-            case 3:fastCashAmount=500;
-            break;
-            case 4:fastCashAmount=1000;
+        switch (choice) {
+            case 1 -> fastCashAmount = 100;
+            case 2 -> fastCashAmount = 200;
+            case 3 -> fastCashAmount = 500;
+            case 4 -> fastCashAmount = 1000;
         }
-        System.out.println("your choosen amount is " + fastCashAmount + "/-rs");
+        System.out.println("your chosen amount is " + fastCashAmount + "/-rs");
         boolean pinVerification=false;
         int remainingAttempts=3;
         while(!pinVerification && remainingAttempts>0)
@@ -417,8 +410,41 @@ public class AtmManagement {
 
     }
     //it will be developed in future
-    private void fundTransaction() {
+    private void fundTransaction(Map<String,Map<String,String>> accountHolderDetails,String cardNumber,List<String> transactionDetails) {
+        Scanner input = new Scanner(System.in);
         System.out.println("FundTransaction option");
+        System.out.println("Enter the Account Number to Transform");
+        String reciverCardNumber=input.next();
+        System.out.println("Enter the Amount to transform");
+        int amountToBeTransform=input.nextInt();
+        if(amountToBeTransform<Integer.parseInt(getCardBalance(accountHolderDetails,cardNumber)))
+        {
+            boolean pinVerification=false;
+            int remainingAttempts=3;
+            while(!pinVerification && remainingAttempts>0)
+            {
+                pinVerification=withDrewAmountPinVerify(accountHolderDetails,cardNumber);
+                remainingAttempts--;
+            }
+            if(!pinVerification)
+            {
+                System.out.printf("Incorrect PIN. Please try again. You have %d attempts remaining.\n", remainingAttempts);
+            }
+            if(pinVerification)
+            {
+                System.out.println("please wait for you transaction");
+                System.out.println("Withdrew Successful of" + amountToBeTransform+"/-Rs");
+                // after the withdrawal successful calculate with remaining amount and add back to the details
+                int remainingBalance=Integer.parseInt(getCardBalance(accountHolderDetails,cardNumber))-amountToBeTransform;
+                putRemainingBalance(accountHolderDetails,cardNumber,remainingBalance);
+                transactionDetails.add("your fast cash Withdrawal amount of  "+amountToBeTransform+"/-Rs");
+            }else{
+                System.out.println("Sorry lot of trails happen so please contact your Bank");
+            }
+        }else{
+            System.out.println("Insufficient Balance");
+        }
+
     }
 
 
