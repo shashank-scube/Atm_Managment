@@ -1,0 +1,356 @@
+===============================================Welcome Page On ATM Screen===================================================
+---------------please insert the ATM card---------------------------
+done Step 1:------------------------------------------------------------
+        Verification of CardDetails
+
+        if(ATM Card Details are match with Bank Details )
+        -->move to Step 2;
+        else
+        -->print a ERROR Message("CARD is invalid ,Please Try again" )
+
+done Step 2:-------------------------------------------------------------
+        verification on pin number
+        if-->Card is valid ,Enter the pin number ;
+              if(pin is valid pin)
+                -->move to step 3:
+        else
+        ----->print ("Provided pin is incorrect ,try again")
+              if(number of trials is more the 3)
+                block the card print("please contact your bank")
+done Step 3:-------------------------------------------------------------
+        choice the language
+        kannada  English Hindi etc
+
+        Display the Account Holder Details name and account number and welcome page with Options;
+        case 1:-------withdraw()
+        case 2:-------TransactionDetails()
+        case 3:-------CheckBalance()
+        case 4:-------ChangePin()
+        case 5:------- fast_cash()
+        case 6:-------fundTransfer()
+
+case 1:---------withdraw()===============================================================================
+        D1:display the  account service withdraw option
+              case 1.1:Saving account
+              case 1.2:Current account
+
+        case 1.1: Saving Account
+              Enter the Amount that you want to withdraw
+
+           case 1.1  --   step 1:---------------------------------
+                                   verify the available amount and the entered amount
+
+                                   if(entered amount is lesser than the available amount of a account holder )
+                                      if(entered amount is greater than 10000)
+                                            ---->process to case 1.1 step 2:
+                                            ---->to verify the otp to conform transaction;
+                                   else
+                                  --->print("insufficient balance please check the balance ");
+                                  ---landing to the Step 3:
+           case 1.1  --   step 2:----------------------------------
+                                    verify OTP for bulk transaction
+                                    ---- send the otp to the account holder register mobile number:
+                                    if(Otp matches )
+                                      proceed with case 1.1 --- step 3:
+                                    else
+                                      -->print ("OTP don't match ,please enter the current OPT")
+                                      if(trails is greater the 3 attempts )
+                                      -->block the transaction and print
+                                      --->print (To many trails ,please contact your bank)
+
+           case 1.1  --- step 3:
+                                  processing your transaction
+                                  if(available amount in the atm is sufficient to customer entered amount)
+                                   ---->process the cash
+                                   ---->print ("transaction successful")
+                                   ---->send notification to the account holder from the bank side ;
+                                   ---->landing to the case 1.1--step 4:
+                                  if else (if any chance the server error)
+                                  ---->print(transaction not successful);
+                                  ---->print ("server error ,please try after some time")
+                                  ---->landing to   case 1.1--step 4:
+          case 1.1--step 4-----------------------completion of transaction-----------------------------------------------------
+                          D:display like
+                          print (do you want to print the receipt yes/no or true/false)
+                              if(yes or true)
+                              --->print the receipt
+                              ------- Do you wan  to continue or exit
+                                      if(continue)
+                                            --->land to the step 3:
+                                      else
+                                            ---->print (thank-you for using atm)
+                                            ---->exit and landing  to the step 1 (welcome page):
+                              else
+                              ------ Do you wan  to continue or exit---------------------------------------
+                                      if(continue)
+                                            --->land to the step 3:
+                                      else
+                                            ---->print (thank-you for using atm)
+                                            ---> Tack you card;
+                                            ---->exit and landing  to the step 1 (welcome page):
+
+
+      case 1.2: current Account
+              Enter the Amount that you want to withdrew
+
+           case 1.2 --   step 1:---------------------------------
+                                   verify the available amount and the entered amount
+
+                                   if(entered amount is lesser than the available amount of a account holder )
+                                      if(entered amount is greater than 10000)
+                                            ---->process to case 1.2 step 2:
+                                            ---->to verify the otp to conform transaction;
+                                   else
+                                  --->print("insufficient balance please check the balance ");
+                                  ---landing to the Step 3:
+           case 1.2  --   step 2:----------------------------------
+                                    verify OTP for bulk transaction
+                                    ---- send the otp to the account holder register mobile number:
+                                    if(Otp matches )
+                                      proced with case 1.2 --- step 3:
+                                    else
+                                      -->print ("OTP don't match ,please enter the current ")
+                                      if(trails is greater the 3 attempts )
+                                      -->block the transaction and print
+                                      --->print (To many trails ,please contact your bank)
+
+           case 1.2  --- step 3:
+                                  -------------------processing your transaction---------------------------------------------
+                                  if(available amount in the atm is sufficient to customer entered amount)
+                                   ---->process the cash
+                                   ---->print ("transaction successful")
+                                   ---->send notification to the account holder from the bank side ;
+                                   ---->landing to the case 1.2--step 4:
+                                  if else (if any chance the server error)
+                                  ---->print(transaction not successful);
+                                  ---->print ("server error ,please try after some time")
+                                  ---->landing to case 1.2--step 4;
+             case 1.2--step 4-----------------------completion of transaction-----------------------------------------------------
+                          D:display like
+                          print (do you want to print the receipt yes/no or true/false)
+                              if(yes or true)
+                              --->print the receipt
+                              ------- Do you wan  to continue or exit
+                                      if(continue)
+                                            --->land to the step 3:
+                                      else
+                                            ---->print (thank-you for using atm)
+                                            ---->exit and landing  to the step 1(welcome page):
+                              else
+                              ------ Do you wan  to continue or exit---------------------------------------
+                                      if(continue)
+                                            --->land to the step 3:
+                                      else
+                                            ---->print (thank-you for using atm)
+                                            ---> Tack you card;
+                                            ---->exit and landing  to the step 1(welcome page):
+
+case 2:-------TransactionDetails()
+                --------------------------------check the Transaction of the Account holder-----------------------------------
+              case 2 -- Step 1:  D2: ----Display the last 24 hours transaction Details of a account holder------------------------
+                        option 1: Date---(which date you want to see the transaction Details)
+                              if(date bellow current data)
+                                  print the statement
+                              else
+                                  print date error,please enter the proper date// month// year;
+
+                        option 2: Year---(from which year he want to see the transaction Details )
+                                  if(year bellow current year)
+                                  print the statement from year to current year;
+                                  else
+                                      year error,please enter the proper year ;
+            case 2 -- step 2:----------------Do you want to continue or exit ---------------------
+                      if(continue)
+                            ---> landing to step3;
+                    else
+                            ---> exit and landing to step 1:
+                            ---> Tack you card;
+
+case 3:-------CheckBalance()
+            ---------------------------------------check the balance of the account holder--------------------------------------------------------------------------
+                    D3: display the Balance of the amount
+                        Options 1: saving account();
+                        Options 2: current account();
+
+                        if(he choice saving account())
+                              print("balance amount in account of account holder")
+                        if else (he choice current account())
+                            print ("balance amount in the current account")
+case 4:-------ChangePin()
+            ---------------------------------------------change the pin number of the Account holder--------------------------------------------------------
+
+                          step 1: ---------------------enter the old pin-----------------------------
+                               ---------------------------- verify the old pin was currect ---------------------
+                                  if(enter old pin was correct  && trail less the 3 times)
+                                          proced to case 4 step 2.1;
+                                  else
+                                        print "error entered pin is incorrect";
+                                        "if you forgot the pin please chose the forgot pin option in "
+                                        case 4.1: forgot pin();
+                                            -----------------verify the registered mobile number------------------------
+                                                ---enter the phone number which is registered with your bank account
+                                                if(entered number is match in the bank account)
+                                                {
+                                                  --proceed to case 4 step 2.2;
+                                                }else {
+                                                  print error "please contact your bank "
+                                                }
+                          case 4--- step 2.1:---------------------proceed to change the pin number----------------------------
+                                      ---------------if the pin is currect then OTP verification-------------
+                                      --->enter the OTP that send to you registered mobile number--------
+                                          if(OTP is correct)
+                                          {
+                                            proced to enter the new pin in
+                                            --->case 4--step 4;
+                                          }else{
+                                            print error please contact to your bank;
+                                          }
+                          case 4--step 2.2------------------------proceed to change the pin number----------------------------
+                                ---if the mobile number is correct then check for the phone and email verification--------
+                                          if(OTP is correct && email verification)
+                                          {
+                                            proceed to enter the new pin in
+                                            --->case 4--step 4;
+                                          }else{
+                                            print error please contact to your bank;
+                                          }
+                          case 4-- step 4---------------------------proceed to enter new pin---------------------------------
+case 5:------- fast cash()----------------------------------Fast Cash Option ------------------------------------------
+                  ---->Select the pre defined amount
+                        100,200,300,500
+                   case 5---Step 1:----------verify the available amount----------------
+                   if(chosen amount is <= available amount)
+                   {
+                        proced to ----case 5--step 2;
+                   }else{
+                        print "error insufficient balance"
+                   }
+                   case5-- step2:------------process to transaction---------------
+                                    -->release the amount ---------
+                                    print (do you want to print the receipt yes/no or true/false)
+                              if(yes or true)
+                              --->print the receipt
+                              ------- Do you wan  to continue or exit
+                                      if(continue)
+                                            --->land to the step 3:
+                                      else
+                                            ---->print (thank-you for using atm)
+                                            ---->exit and landing  to the step 1(welcome page):
+                              else
+                              ------ Do you wan  to continue or exit---------------------------------------
+                                      if(continue)
+                                            --->land to the step 3:
+                                      else
+                                            ---->print (thank-you for using atm)
+                                            ---> Tack you card;
+                                            ---->exit and landing  to the step 1(welcome page):
+
+
+case 6:-------fundTransfer()
+                  -----choose the Fund Transfer option------------------------------
+                  Option 1:Within the Same bank
+                  Option 2:External Bank;
+
+   Option 1: Within the Same Bank ()
+                  -----------------Ask the Details about account number,account holder Details
+            case 6-Option 1--Step 1: ----------verify the account Details----------------
+                              if(account details is match with bank details )
+                              {
+                                    proceed to case 6--Option 1----Step 2:
+                              }else
+                                    Print "enter the currect details of bank Holder details "
+            case 6-Option 1---Step 2:---------------Enter the amount to transform---------------
+                        print enter the amount to transfer ----------------
+                        if(amount available in  the account holder balance )
+                        {
+                              proced to tranfrom
+                              --->land to confirm  and OTP verification case 6--Option 1--step3;
+                        }else {
+                              print "insufficient balance ";
+                        }
+
+            case 6-Option 1--Step 3:--------------------------confirm and verify the OTP--------------
+                              ---------------OTP verification and Confirm ----------
+                              if(Confirm is true)
+                              {
+                                    ---->OTP verify
+                                    if(otp is match )
+                                    {
+                                         print transfer successful;
+                                         --landing to case 6 Option 1 step 4:
+                                    }else {
+                                          print otp incorrect please try again or visit you bank;
+                                    }
+                              }
+                              else
+                                    ---->landing to the case 6--Option 1---Step 2----- to edit the Details
+            case 6 --Option 1 --- Step 4---------------------------------continue o bank or exit
+                                           print (do you want to print the receipt yes/no or true/false)
+                                                       if(yes or true)
+                                                             --->print the receipt
+                                                            ------- Do you wan  to continue or exit
+                                                            if(contionue)
+                                                                  --->land to the step 3:
+                                                             else
+                                                                   ---->print (thank-you for using atm)
+                                                                  ---->exit and landing  to the step 1(welcome page):
+                                                      else
+                                                            ------ Do you wan  to continue or exit---------------------------------------
+                                                            if(contionue)
+                                                            --->land to the step 3:
+                                                             else
+                                                                  ---->print (thank-you for using atm)
+                                                                         ---> Tack you card;
+                                                                  ---->exit and landing  to the step 1(welcome page):
+      Option 2: Within the Same Bank ()
+                  -----------------Ask the Details about account number,account holder Details
+             case 6-Option 2--Step 1: ----------verify the account Details----------------
+                              if(account details is match with bank details )
+                              {
+                                    proceed to case 6--Option 1----Step 2:
+                              }else
+                                    Print "enter the currect details of bank Holder details "
+            case 6-Option 2---Step 2:---------------Enter the amount to transform---------------
+                        print enter the amount to transfer ----------------
+                        if(amount available in  the account holder balance )
+                        {
+                              -->add extra charges for transfer
+                              proced to tranfrom
+                              --->land to confirm  and OTP verification case 6--Option 2--step3;
+                        }else {
+                              print "insufficient balance ";
+                        }
+
+            case 6-Option 2--Step 3:--------------------------confirm and verify the OTP--------------
+                              ---------------OTP verification and Confirm ----------
+                              if(Confirm is true)
+                              {
+                                    ---->OTP verify
+                                    if(otp is match )
+                                    {
+                                         print transfer successful;
+                                         --landing to case 6 Option 2 step 4:
+                                    }else {
+                                          print otp incorrect please try again or visit you bank;
+                                    }
+                              }
+                              else
+                                    ---->landing to the case 6--Option 2---Step 2----- to edit the Details
+            case 6 --Option 2 --- Step 4---------------------------------continue to bank or exit
+                                           print (do you want to print the receipt yes/no or true/false)
+                                                       if(yes or true)
+                                                             --->print the receipt
+                                                            ------- Do you wan  to continue or exit
+                                                            if(contionue)
+                                                                  --->land to the step 3:
+                                                             else
+                                                                   ---->print (thank-you for using atm)
+                                                                  ---->exit and landing  to the step 1(welcome page):
+                                                      else
+                                                            ------ Do you wan  to continue or exit---------------------------------------
+                                                            if(continue)
+                                                            --->land to the step 3:
+                                                             else
+                                                                  ---->print (thank-you for using atm)
+                                                                         ---> Tack you card;
+                                                                  ---->exit and landing  to the step 1(welcome page):

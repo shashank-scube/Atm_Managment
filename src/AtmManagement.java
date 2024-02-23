@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class AtmManagement {
     static Map<String,String> accountHolderData=new HashMap<>()
@@ -18,6 +15,8 @@ public class AtmManagement {
     static Map<String,Map<String,String>> accountHolderDetails=new HashMap<>(){{
         accountHolderDetails.put("CARD123456",accountHolderData);
     }};
+    // used to store the transactionDetails hear
+    static Map<String, List<String>> accountHolderTransaction=new HashMap<>();
 
     // Main Method starts hear
     public static void main(String[] args)
@@ -211,35 +210,37 @@ public class AtmManagement {
         System.out.println("WELCOME"+" "+getCardUserName(accountHolderDetails,cardNumber));
         while(true)
         {
+            List<String> transactionDetails=new ArrayList<>();
             AtmManagement atmManagement=new AtmManagement();
             System.out.println("Choose you Transaction Option");
             System.out.println("1.Withdraw 2.TransactionDetails 3.CheckBalance 4.ChangePin 5.FastCash 6.FundTransaction 7.Exit 8.Login-another-AC");
             int chooseOption=input.nextInt();
             switch (chooseOption){
 
-                case 1: atmManagement.withDraw(accountHolderDetails,cardNumber);
+                case 1: atmManagement.withDraw(accountHolderDetails,cardNumber,transactionDetails);
                     break;
-                case 2: atmManagement.transactionDetails();
+                case 2: atmManagement.transactionDetails(cardNumber);
                     break;
                 case 3: atmManagement.checkBalance(accountHolderDetails,cardNumber);
                     break;
                 case 4: atmManagement.changePin(accountHolderDetails,cardNumber);
                     break;
-                case 5: atmManagement.fastCash();
+                case 5: atmManagement.fastCash(cardNumber,accountHolderDetails,transactionDetails);
                     break;
                 case 6:atmManagement.fundTransaction();
                     break;
                 case 7:return ;
                 case 8:main(null);
             }
-
+            accountHolderTransaction.put(cardNumber,transactionDetails);
         }
+
     }
     // All the Transaction option methods
 
 
     //withdrew amount using this method
-    private void withDraw(Map<String,Map<String,String>> accountHolderDetails,String cardNumber)
+    private void withDraw(Map<String,Map<String,String>> accountHolderDetails,String cardNumber,List<String> transactionDetails)
     {
         System.out.println("withdraw option");
         System.out.println("Enter the amount to withDraw");
@@ -264,12 +265,13 @@ public class AtmManagement {
                 System.out.println("Withdrew Successful of" + withDrewAmount+"/-Rs");
                 int remainingBalance=Integer.parseInt(getCardBalance(accountHolderDetails,cardNumber))-withDrewAmount;
                 putRemainingBalance(accountHolderDetails,cardNumber,remainingBalance);
+                transactionDetails.add("withdraw amount of"+withDrewAmount+"-/Rs");
             }else{
                 System.out.println("Sorry lot of trails happen so please contact your Bank");
             }
         }
     }
-    // to verify the pin to conform withdrew.
+    // to verify the pin to conform withdrew and also for fast cash withdraw.
     private boolean withDrewAmountPinVerify(Map<String, Map<String, String>> accountHolderDetails, String cardNumber) {
         Scanner input=new Scanner(System.in);
         System.out.println("Enter the pin Number to conform you Transaction");
@@ -285,9 +287,19 @@ public class AtmManagement {
 
 
     //it will be developed in future
-    private void transactionDetails()
+    private void transactionDetails(String cardNumber)
     {
         System.out.println("Transaction option");
+        List<String> transactionDetails = accountHolderTransaction.get(cardNumber);
+
+        if (transactionDetails != null && !transactionDetails.isEmpty()) {
+            // Iterate through the list and print each transaction detail
+            for (String detail : transactionDetails) {
+                System.out.println(detail);
+            }
+        } else {
+            System.out.println("No transaction details available.");
+        }
     }
     //To check the Balance
     private void checkBalance(Map<String,Map<String,String>> accountHolderDetails,String cardNumber) {
@@ -362,8 +374,47 @@ public class AtmManagement {
     //end of changing the pin_Number
 
     //it will be developed in future
-    private void fastCash() {
+    private void fastCash(String cardNumber,Map<String,Map<String,String>> accountHolderDetails,List<String> transactionDetails) {
+        Scanner input=new Scanner(System.in);
         System.out.println("FastCash option");
+        System.out.println("Choose the fastCash Amount");
+        System.out.println("1.100 2.200 3.500 4.1000");
+        int fastCashAmount=0;
+        int choice=input.nextInt();
+        switch (choice)
+        {
+            case 1:fastCashAmount=100;
+            break;
+            case 2:fastCashAmount=200;
+            break;
+            case 3:fastCashAmount=500;
+            break;
+            case 4:fastCashAmount=1000;
+        }
+        System.out.println("your choosen amount is " + fastCashAmount + "/-rs");
+        boolean pinVerification=false;
+        int remainingAttempts=3;
+        while(!pinVerification && remainingAttempts>0)
+        {
+            pinVerification=withDrewAmountPinVerify(accountHolderDetails,cardNumber);
+            remainingAttempts--;
+        }
+        if(!pinVerification)
+        {
+            System.out.printf("Incorrect PIN. Please try again. You have %d attempts remaining.\n", remainingAttempts);
+        }
+        if(pinVerification)
+        {
+            System.out.println("please wait for you transaction");
+            System.out.println("Withdrew Successful of" +fastCashAmount +"/-Rs");
+            // after the withdrawal successful calculate with remaining amount and add back to the details
+            int remainingBalance=Integer.parseInt(getCardBalance(accountHolderDetails,cardNumber))-fastCashAmount;
+            putRemainingBalance(accountHolderDetails,cardNumber,remainingBalance);
+            transactionDetails.add("your fast cash Withdrawal amount of  "+fastCashAmount+"/-Rs");
+        }else{
+            System.out.println("Sorry lot of trails happen so please contact your Bank");
+        }
+
     }
     //it will be developed in future
     private void fundTransaction() {
